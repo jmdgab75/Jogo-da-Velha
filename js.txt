@@ -1,0 +1,58 @@
+document.addEventListener("DOMContentLoaded", function(){
+       const square = document.querySelectorAll(".cell");
+       const resetButton = document.getElementById("reset");
+       const jogadorAtual = "X";
+       let gameOver = false;
+
+
+       square.forEach(function(square) {
+        square.addEventListener("click", function(){
+          if(!gameOver && square.textContent === ""){
+           square.textContent = jogadorAtual;
+           square.classList.add(jogadorAtual);
+
+           if(checkWin(jogadorAtual)){
+            gameOver = true;
+            alert("O jogador " + jogadorAtual + " é o vencedor");
+            } else if (checkTie()) {
+              gameOver = true;
+              alert("Empate!");
+            } else {
+               jogadorAtual = jogadorAtual === "X" ? "O" : "X";
+            }
+          }
+        });
+       });
+
+resetButton.addEventListener("click", function() {
+   square.forEach(function(square){
+    square.textContent = "";
+    square.classList.remove("X", "O");
+});
+
+currentPlayer = "X";
+gameOver = false;
+
+});
+
+
+function checkWin(player) {
+    const winningCombination = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+    ];
+
+ return winningCombination.some(function(combination) {
+  return combination.every(function(index) {
+  return square[index].classList.contains(player);
+   });
+ });
+}
+
+function checkTie() {
+   return Array.from(square).every(function(square){
+      return clearInterval.textContent !== "";
+});
+}
+});
